@@ -106,7 +106,6 @@ def part_two():
                 current_num = ""
                 num_positions = []
 
-    print(possible_gears)
     for value in possible_gears.values():
         if len(value) == 2:
             gear_ratio_sum += int(value[0]) * int(value[1])
