@@ -4,20 +4,21 @@ def part1(puzzle_input):
 
     for line in puzzle_input:
         winning_numbers, drawn_numbers = format_input(line.rstrip())
+        winning_no_count(winning_numbers, drawn_numbers)
         count = winning_no_count(winning_numbers, drawn_numbers)
         points += pow(2, count - 1) if count > 0 else 0
 
     return points
 
 def format_input(line):
-    index = line.find(":") + 1
-    split_line = line[index:].split("|")
-    return [split_line[0].split(), split_line[1]]
+    index = line.find(":") + 2
+    split_line = line[index:].split(" | ")
+    return [split_line[0].split(), split_line[1].split()]
 
 def winning_no_count(winning_numbers, drawn_numbers):
-    # problem's likely here
     count = 0
     for number in winning_numbers:
+        # if number in drawn_numbers: print(str(number) + " shows up in " + str(drawn_numbers))
         if number in drawn_numbers: count += 1
     return count
 
