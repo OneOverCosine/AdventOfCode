@@ -1,14 +1,33 @@
 def part1(puzzle_input):
-    # 33611 was too high
     points = 0
 
     for line in puzzle_input:
         winning_numbers, drawn_numbers = format_input(line.rstrip())
-        winning_no_count(winning_numbers, drawn_numbers)
         count = winning_no_count(winning_numbers, drawn_numbers)
         points += pow(2, count - 1) if count > 0 else 0
 
     return points
+
+def part2(puzzle_input):
+    cards = {}
+    i = 0
+
+    for line in puzzle_input:
+        winning_numbers, drawn_numbers = format_input(line.rstrip())
+        count = winning_no_count(winning_numbers, drawn_numbers)
+
+        for j in range(i,i+count):
+            current = j+2
+            to_add = 1 * (cards[i+1] + 1) if i+1 in cards.keys() else 1
+            
+            if current in cards.keys():
+                cards[current] += to_add
+            else:
+                cards[current] = to_add
+        i += 1
+    
+    print("Based on my calculations, there should be " + str(sum(cards.values()) + i) + " cards....")
+
 
 def format_input(line):
     index = line.find(":") + 2
@@ -18,7 +37,6 @@ def format_input(line):
 def winning_no_count(winning_numbers, drawn_numbers):
     count = 0
     for number in winning_numbers:
-        # if number in drawn_numbers: print(str(number) + " shows up in " + str(drawn_numbers))
         if number in drawn_numbers: count += 1
     return count
 
@@ -32,5 +50,6 @@ example_input = [
 ]
 
 puzzle_input = open("./inputs/04.txt")
+# print("Cards score: " + str(part1(puzzle_input)))
 
-print("Cards score: " + str(part1(puzzle_input)))
+part2(puzzle_input)
